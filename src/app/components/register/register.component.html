@@ -1,0 +1,102 @@
+<div class="register-container">
+    <div class="register-card">
+      <h2 class="title">Crear Cuenta</h2>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <div class="form-group">
+          <label for="username">Nombre de usuario</label>
+          <input 
+            type="text" 
+            id="username" 
+            formControlName="username"
+            class="form-control"
+            [ngClass]="{'is-invalid': registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)}"
+          >
+          <div class="invalid-feedback" *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+            <div *ngIf="registerForm.get('username')?.errors?.['required']">
+              Nombre de usuario es obligatorio
+            </div>
+            <div *ngIf="registerForm.get('username')?.errors?.['minlength']">
+              Nombre de usuario debe tener al menos 3 caracteres
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            class="form-control"
+            [ngClass]="{'is-invalid': registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)}"
+          >
+          <div class="invalid-feedback" *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+            <div *ngIf="registerForm.get('email')?.errors?.['required']">
+              Correo electrónico es obligatorio
+            </div>
+            <div *ngIf="registerForm.get('email')?.errors?.['email']">
+              Formato de correo electrónico inválido
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password"
+            class="form-control"
+            [ngClass]="{'is-invalid': registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)}"
+          >
+          <div class="invalid-feedback" *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+            <div *ngIf="registerForm.get('password')?.errors?.['required']">
+              Contraseña es obligatoria
+            </div>
+            <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+              Contraseña debe tener al menos 6 caracteres
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar contraseña</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword"
+            class="form-control"
+            [ngClass]="{'is-invalid': (registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)}"
+          >
+          <div class="invalid-feedback" *ngIf="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+            <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">
+              Confirmación de contraseña es obligatoria
+            </div>
+            <div *ngIf="registerForm.errors?.['mismatch']">
+              Las contraseñas no coinciden
+            </div>
+          </div>
+        </div>
+        
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+        
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn-register" [disabled]="registerForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="spinner"></span>
+            <span *ngIf="!isLoading">Registrarse</span>
+          </button>
+        </div>
+        
+        <div class="form-footer">
+          <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
